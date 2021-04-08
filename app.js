@@ -9,6 +9,40 @@ var usersRouter = require('./routes/users');
 var parkingRouter = require('./routes/parking');
 var starsRouter = require('./routes/stars');
 var slotRouter = require('./routes/slot');
+var parking= require("./models/parking");
+var resourceRouter = require('./routes/resource');
+
+// We can seed the collection if needed on server start
+async function recreateDB(){
+  // Delete everything
+  await parking.deleteMany();
+
+  let instance1= new parking({Types:"student", ticket:1,
+  capacity:10});
+  instance1.save( function(err,doc) {
+    if(err) return console.error(err);
+    console.log("First object saved")
+  });
+  let instance2= new parking({Types:"faculity", ticket:2,
+  capacity:5});
+  instance2.save( function(err,doc) {
+    if(err) return console.error(err);
+    console.log("Second object saved")
+  });
+  let instance3= new parking({Types:"common", ticket:3,
+  capacity:50});
+  instance3.save( function(err,doc) {
+    if(err) return console.error(err);
+    console.log("Third object saved")
+  });
+}
+let reseed= true;
+if(reseed) {recreateDB();}
+
+const connectionString =process.env.MONGO_CON
+mongoose = require('mongoose');
+mongoose.connect(connectionString,
+  {useNewUrlParser: true, useUnifiedTopology: true});
 
 var app = express();
 
@@ -27,6 +61,7 @@ app.use('/users', usersRouter);
 app.use('/parking', parkingRouter);
 app.use('/stars', starsRouter);
 app.use('/slot', slotRouter);
+app.use('/resource', resourceRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -45,3 +80,10 @@ app.use(function(err, req, res, next) {
 });
 
 module.exports = app;
+
+//Get the default connection
+var db = mongoose.connection;
+//Bind connection to error event 
+db.on('error', console.error.bind(console, 'MongoDB connection error:'));
+db.once("open", function()
+{console.log("Connection to DB succeeded")});
