@@ -1,0 +1,37 @@
+extends layout
+
+block content
+  h1= title
+  
+  div(class="container-fluid")
+        div(class="row")
+            -
+                let parking = [
+                    {
+                        "type": "student",
+                        "ticket": "100",
+                        "capacity": "150"                        
+                    },
+                    {
+                        "type": "common",
+                        "ticket": "150",
+                        "capacity": "100"
+                    },
+                    {
+                        "type": "professor",
+                        "ticket": "80",
+                        "capacity": "100"
+                    },                   
+                ]
+            each p,ink in parking 
+                div(class="col-sm-2" onclick=`buy(${ink})` ) #{p.type}
+                div(class="col-sm-2" ) #{p.ticket}
+                div(class="col-sm-2" ) #{p.capacity}
+
+
+  script.
+     
+       function buy(a)
+       {
+         alert(`You purchased Item ${a+1}`)
+       }
