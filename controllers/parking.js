@@ -11,8 +11,17 @@ exports.parking_list= async function(req, res){
 };
 
 // for a specific parking.
-exports.parking_detail= function(req, res) {
-    res.send('NOT IMPLEMENTED: parking detail: '+ req.params.id);
+exports.parking_detail = async function(req, res) {
+    console.log("detail" + req.params.id)
+    try {
+        result = await parking.findById( req.params.id)
+        res.send(result)
+    } 
+    catch (error) {
+        res.status(500)
+        res.send(`{"error": document for id ${req.params.id} not found`);
+    }
+
 };
 
 
@@ -22,8 +31,22 @@ exports.parking_delete= function(req, res) {
 };
 
 // Handle parking update form on PUT.
-exports.parking_update_put= function(req, res) {
-    res.send('NOT IMPLEMENTED: parking update PUT'+ req.params.id);
+exports.parking_update_put = async function(req, res) {
+console.log(`update on id ${req.params.id} with body ${JSON.stringify(req.body)}`)
+try {
+    let toUpdate = await parking.findById( req.params.id)
+// Do updates of properties
+    if(req.body.Types) toUpdate.Types = req.body.Types;
+    if(req.body.ticket) toUpdate.ticket = req.body.ticket;
+    if(req.body.capacity) toUpdate.capacity = req.body.capacity;
+    let result = await toUpdate.save();
+    console.log("Sucess " + result)
+    res.send(result)
+    } 
+    catch (err) {
+        res.status(500)
+        res.send(`{"error": ${err}: Update for id ${req.params.id} failed`);
+    }
 };
 
 exports.parking_view_all_Page= async function(req, res) {
