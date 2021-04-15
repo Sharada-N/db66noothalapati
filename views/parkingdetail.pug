@@ -1,0 +1,26 @@
+extends layout
+
+block content
+  h1(id="newtitle")= title
+
+  if (toShow == null)
+    h2 No instance to delete
+  else
+    - let parkingid = toShow._id
+    - let parkingTypes = toShow.Types
+    - let parkingticket = toShow.ticket
+    - let parkingcapacity = toShow.capacity
+
+    div
+      div.row
+        div(class='costumeAttr mr-3') parking ID is:
+        div(class='newvalues specialstyles') #{parkingid}
+      div.row
+        div(class='costumeAttr mr-3') parking Types is:
+        div(class="newvalues") #{parkingTypes}
+      div.row
+        div(class='costumeAttr mr-3') parking ticket is:
+        div(class="newvalues") #{parkingticket}
+      div.row
+        div(class='costumeAttr mr-3') parking capacity is:
+        div(class="newvalues") #{parkingcapacity}

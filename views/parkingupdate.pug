@@ -1,0 +1,47 @@
+extends layout
+
+block content
+  h1= title
+
+  if (toShow == null)
+    h2 No instance to delete
+  else
+    - let parkingid = toShow._id
+    - let parkingTypes = toShow.Types
+    - let parkingticket = toShow.ticket
+    - let parkingcapacity = toShow.capacity
+  
+    div.row(class='mb-2')
+      div.mr-1 ID is
+      div #{parkingid}
+    - let actionid = "/resource/parking/" + parkingid
+    form(id='parkingForm', action= actionid, method="PUT")
+      div.form-group
+          label.costumeAttr(for='Types') parking Types
+          input#Types(type='text', name='Types', value= Types )
+      div.form-group
+          label.costumeAttr(for='ticket') parking ticket
+          input#ticket(type='text', name='ticket', value= ticket )
+      div.form-group
+          label.costumeAttr(for='capacity') parking capacity
+          input#capacity(type='number', name='capacity', value= capacity )
+      input(type="submit")
+
+  script.
+    document.forms['parkingForm'].addEventListener('submit', (event) => {
+      event.preventDefault();
+      console.log(event.target)
+      // TODO do something here to show user that form is being submitted
+      fetch(event.target.action, {
+        method: 'PUT',
+        body: new URLSearchParams(new FormData(event.target)) // event.target is the form
+      }).then((resp) => {
+        return resp.json(); // or resp.text() or whatever the server sends
+      }).then((body) => {
+        alert("Update succeded")
+        // TODO handle body
+      }).catch((error) => {
+        // TODO handle error
+        alert("Update failed " + error )
+      });
+    });

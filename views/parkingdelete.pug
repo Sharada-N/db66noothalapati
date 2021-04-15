@@ -1,0 +1,55 @@
+extends layout
+
+block content
+  h1= title
+
+  if (toShow == null)
+    h2 No instance to delete
+  else
+    - let parkingid = toShow._id
+    - let parkingTypes = toShow.Types
+    - let parkingticket = toShow.ticket
+    - let parkingcapacity = toShow.capacity
+    - let actionid = "/resource/parking/" + parkingid
+
+    script let actionid = "#{actionid}"
+    div
+      div.row
+        div(class='costumeAttr mr-3') parking ID is:
+        div(class='newAttr') #{parkingid}
+      div.row
+        div(class='costumeAttr mr-3') parking Types is:
+        div(class='newAttr') #{parkingTypes}
+      div.row
+        div(class='costumeAttr mr-3') parking ticket is:
+        div(class='newAttr') #{parkingticket}
+      div.row
+        div(class='costumeAttr mr-3') parking capacity is:
+        div(class='newAttr') #{parkingcapacity}
+      
+
+    button(class="btn btn-danger m-2" onclick="deleteOnid()") Delete
+    button(class="btn btn-secondary m-2" onclick="cancel()") Cancel
+
+  script.
+    function cancel() {
+      // Go back to the home page for the parking collection
+      window.location.href='/parking'
+    }
+  script.
+    function deleteOnid() {
+      console.log("Deleting the Resource")
+      // delete first
+      fetch(actionid, {
+        method: 'DELETE'      // Don't need a body for the delete
+      }).then((resp) => {
+        return resp.json(); // or resp.text() or whatever the server sends
+      }).then((body) => {
+        alert("Delete succeded")
+        window.location.href='/resource/parking'
+        // TODO handle body
+      }).catch((error) => {
+        // TODO handle error
+        alert("Delete failed " + error )
+      });
+    }
