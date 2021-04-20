@@ -82,7 +82,7 @@ exports.parking_update_put = async function(req, res) {
 exports.parking_view_all_Page = async function (req, res) {
     try {
         theparkings = await parking.find();
-        res.render('parkings', { title: 'parking Search Results', results: theparkings });
+        res.render('parking', { title: 'parking Search Results', results: theparkings });
     }
     catch (err) {
         res.send(`{"error": ${err}}`)

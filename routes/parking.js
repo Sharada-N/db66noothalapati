@@ -2,9 +2,10 @@ var express= require('express');
 const parking_controlers= require('../controllers/parking');
 var router= express.Router();
 
+module.exports= router;
 /* GET parkings */
 router.get('/',parking_controlers.parking_view_all_Page);
-module.exports= router;
+
 
 /* GET detail parking page */
 router.get('/detail', parking_controlers.parking_view_one_Page);

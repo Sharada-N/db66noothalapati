@@ -4,17 +4,19 @@ block content
   h1= title
   
   div(class="container-fluid")
-        div(class="row")
+        div(class="row m-1")
             -
                 let parking=results 
             each p,ink in parking 
-                div(class="col-sm-2" onclick=`buy(${ink})` ) #{p.type}
-                div(class="col-sm-2" ) #{p.ticket}
-                div(class="col-sm-2" ) #{p.capacity}
+              - let destination= `dispatch(\"/parking/update?id=${p._id}\")`
+                div(class="col-sm-4 bg-info m-1 p-3" ) #{p.type} - #{p.ticket} - #{p.capacity}
+                button.btn( class="btn-primary ml-1", onclick= destination) Update
 
 
   script.
-     
+       function dispatch(path){
+       window.location.href=path
+       }
        function buy(a)
        {
          alert(`You purchased Item ${a+1}`)

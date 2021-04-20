@@ -3,12 +3,9 @@ extends layout
 block content
   h1= title
   p My Page #{title}
-  
-  button(type="button", class="btn btn-secondary") press me 
-  br
-  br
-  div(id='target') Display
-  br
+  button(type="button", class="btn btn-secondary" onclick="update()") press me 
+  div#target
+  a(href='parking') Parking
  
   script.
     var client_count = 0;
