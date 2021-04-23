@@ -112,9 +112,10 @@ exports.parking_create_Page = function(req, res) {
         res.render('parkingcreate', { title: 'parking Create'});
     }
     catch(err){
+        // res.error(500,`{"error": ${err}}`);
         res.status(500)
-        res.send(`{'error': '${err}'}`);
-    }
+        res.send(`{"error": Error creating ${err}}`); 
+        }
 };
     
 // Handle building the view for updating a fish.

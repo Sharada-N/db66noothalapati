@@ -1,15 +1,12 @@
 extends layout
 
 block content
-  h1= title
-  p My Page #{title}
-  button(type="button", class="btn btn-secondary" onclick="update()") press me 
-  div#target
-  a(href='parking') Parking
- 
-  script.
-    var client_count = 0;
-    function update(){
-      client_count++
-      document.getElementById("target").innerHTML = `Value now ${client_count}`
-    } 
+  if (!user)
+    a(href="/login") Login
+    br
+    a(href="/register") Register
+  if (user)
+    p You are currently logged in as #{user.username}
+    a(href="/parking") Take me to Parking
+    br
+    a(href="/logout") Logout
