@@ -14,8 +14,8 @@ block content
               - let del= `dispatch(\"/parking/delete?id=${p._id}\")`
                 div(class="col-sm-4 bg-info m-1 p-3" ) #{p.type} - #{p.ticket} - #{p.capacity}
                   button.btn( class="btn-primary ml-1", onclick= destination) Update
-                  button.btn( class="btn-primary ml-1", onclick= detail) Update
-                  button.btn( class="btn-primary ml-1", onclick= del) Update
+                  button.btn( class="btn-primary ml-1", onclick= detail) view
+                  button.btn( class="btn-primary ml-1", onclick= del) delete
 
 
   script.
